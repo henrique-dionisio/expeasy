@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Gafata&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+link[rel="shortcut icon"] {
+    width: 40px;
+    height: 40px;
+}
+
+body {
+    background-color: whitesmoke;
+    margin-bottom: 0.8rem;
+}
+
+.intro-section {
+  background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+  color: #fff; 
+  padding: 50px 0;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    width: 7rem;
+}
+
+.title {
+    font-family: "Gafata", sans-serif;
+    font-weight: 600;
+    font-size: 2.2rem;
+}
+
+.subtitle {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.3rem;
+    margin-top: -1rem;
+}
+
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #85D523;
+    font-size: 1rem;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 0.8rem;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-primary:hover {
+    background-color: #6FA91C;
+    border: none;
+}
+
+.btn-primary:focus, .btn-primary:active {
+  background-color: #6FA91C !important;
+  border: none;
+}
+
+
+#more-features {
+    padding: 60px 0 60px 0;
+    overflow: hidden;
+  }
+  
+  #more-features .box {
+    padding: 40px;
+    margin-bottom: 30px;
+    margin-top: 1rem;
+    box-shadow: 0px 0px 30px rgba(73, 78, 92, 0.15);
+    background: #fff;
+    height: 100%;
+    text-align: center;
+    padding-bottom: 1%;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: "Gafata", sans-serif;
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    margin-bottom: 0.7rem;
+    font-family: "Courier Prime", monospace;
+    font-size: 1rem;
+  }
+  
+  #more-features .icon {
+    float: left;
+    margin-top: 8%;
+  }
+  
+  #more-features h4 {
+    margin-left: 100px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 18px;
+    padding-top: 4%;
+    text-decoration: underline;
+  }
+  
+  #more-features p {
+    font-size: 14px;
+    margin-left: 100px;
+    margin-bottom: 0;
+    line-height: 24px;
+  }
+
+  footer {
+    font-size: 0.9rem;
+    position: relative;
+    width: 100%;
+    margin-top: 3rem;
+}
+  
+  @media (max-width: 767px) {
+    #more-features .box {
+      margin-bottom: 20px;
+    }
+  
+    #more-features .icon {
+      float: none;
+      text-align: center;
+      padding-bottom: 15px;
+    }
+  
+    #more-features h4,
+    #more-features p {
+      margin-left: 0;
+      text-align: center;
+    }
+  }
+
+
+
+
+
+
