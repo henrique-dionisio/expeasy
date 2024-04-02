@@ -1,9 +1,41 @@
+
+// ----- INPUT DA DATA -----
+
+// Obtenha a data atual
+var dataAtual = new Date();
+
+// Subtraia dois dias da data atual
+var doisDiasAntes = new Date(dataAtual);
+doisDiasAntes.setDate(dataAtual.getDate() - 5);
+
+// Converta a data para o formato YYYY-MM-DD
+var dataFormatada = doisDiasAntes.toISOString().split('T')[0];
+
+// Selecione o elemento input de data
+var inputData = document.getElementById('data');
+
+// Defina o atributo min para permitir datas a partir de dois dias atrás
+inputData.setAttribute('min', dataFormatada);
+
+// Converta a data atual para o formato YYYY-MM-DD
+var dataAtualFormatada = dataAtual.toISOString().split('T')[0];
+
+// Defina o atributo max para a data atual para impedir datas futuras
+inputData.setAttribute('max', dataAtualFormatada);
+
+// Defina o valor do campo de data para a data atual
+inputData.value = dataAtualFormatada;
+
+//---------------------------------------------------
+
+
+//const inputData = document.getElementById('data');
+    //const dataAtual = new Date().toLocaleDateString('pt-BR');
+    //inputData.value = dataAtual;
+
+    
+
 // ------ INPUTS DE SE HOUVE VENDA OU NÃO -----
-
-const inputData = document.getElementById('data');
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    inputData.value = dataAtual;
-
 
     const houveVendasSelect = document.getElementById('houve-vendas');
     const camposVendas = document.getElementById('campos-vendas');
