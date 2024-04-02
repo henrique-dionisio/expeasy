@@ -26,7 +26,7 @@ O projeto é totalmente responsivo, proporcionando uma experiência otimizada ta
 Criado para facilitar a vida dos vendedores de campo, o projeto surgiu da necessidade de facilitar a geração de relatórios para o controle de visitas e despesas.
 
 ## 🌐 Acesso Rápido
-Experimente a [ExpEasy]([link_para_o_projeto](https://expeasy.vercel.app/))) agora mesmo!
+Experimente a [ExpEasy]([link_para_o_projeto](https://expeasy.vercel.app/)/)) agora mesmo!
 
 ## 📄 Licença
 Este projeto está sob a Licença Apache-2.0.
