@@ -509,12 +509,31 @@ document.addEventListener('DOMContentLoaded', function() {
 // ----- GERAR RELATORIO EM PDF -----
 
 function gerarPdf() {
-    // Chama a função para gerar o PDF
-    // ...
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    const camposObrigatorios = document.querySelectorAll('[required]');
+    let todosPreenchidos = true;
 
-    // Após gerar o PDF, abre a caixa de diálogo de impressão
-    window.print();
+    camposObrigatorios.forEach(campo => {
+        if (!campo.value.trim()) {
+            todosPreenchidos = false;
+            // Você pode adicionar um estilo para destacar campos obrigatórios não preenchidos aqui, se desejar
+            campo.style.border = '1px solid red';
+        }
+    });
+
+    if (todosPreenchidos) {
+        // Todos os campos obrigatórios foram preenchidos, chama a função para gerar o PDF
+        // Chama a função para gerar o PDF
+        // ...
+
+        // Após gerar o PDF, abre a caixa de diálogo de impressão
+        window.print();
+    } else {
+        // Exibir mensagem de erro ou qualquer ação que desejar
+        alert('Por favor, preencha todos os campos obrigatórios.');
+    }
 }
+
 
 // ----------------------------------------------------------
 
