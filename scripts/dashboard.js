@@ -218,6 +218,8 @@ document.addEventListener("click", function(event) {
 // ----------------------------------------------------
 
 
+// ----- FUNÇÃO DO BOTÃO DE ADICIONAR DESPESA -----
+
 document.addEventListener("DOMContentLoaded", function() {
     // Adicionar evento de clique ao botão de adicionar despesa
     var btnAdicionarDespesa = document.querySelector(".btn-adicionar-despesa");
@@ -252,6 +254,10 @@ document.querySelector('.btn-adicionar-despesa').addEventListener('click', funct
     var previewDespesa = despesa.querySelector('#preview-imagem-despesa');
     previewDespesa.innerHTML = '';
 
+    //Limpar o campo de descrição da nova despesa
+    despesa.querySelector('.custom-input-descricao').value = '';
+    
+
     // Adicionar a nova despesa ao final do formulário de despesas
     document.querySelector('#despesas').appendChild(despesa);
 
@@ -260,6 +266,7 @@ document.querySelector('.btn-adicionar-despesa').addEventListener('click', funct
         exibirPreviewImagemDespesa(this, previewDespesa);
     });
 });
+// ----------------------------------------------------
 
 
 // ---- FUNÇÃO DO BOTÃO DE REMOVER DESPESAS ---- 
@@ -534,6 +541,47 @@ function gerarPdf() {
     }
 }
 
+// ----------------------------------------------------------
+
+// ----- CAIXA DE TEXTO E INPUT DE TEXTO SE ADEQUA AO CONTEÚDO -----
+
+// Seleciona todas as textarea e inputs do tipo texto no documento
+const inputs = document.querySelectorAll('textarea, input[type="text"]');
+
+// Itera sobre todos os elementos selecionados
+inputs.forEach(input => {
+    // Adiciona um manipulador de eventos para o evento input
+    input.addEventListener('input', autoResize);
+});
+
+// Função para redimensionar os elementos
+function autoResize(event) {
+    const element = event.target; // O elemento que disparou o evento
+
+    // Adiciona um pequeno atraso antes de redimensionar o input
+    setTimeout(() => {
+        // Se for uma textarea
+        if (element.tagName === 'TEXTAREA') {
+            element.style.height = 'auto'; // Redefine a altura para auto
+            element.style.height = element.scrollHeight + 'px'; // Define a altura com base no conteúdo
+        }
+        // Se for um input do tipo texto
+        else if (element.tagName === 'INPUT' && element.type === 'text') {
+            const tmp = document.createElement('span'); // Cria um elemento temporário
+            tmp.textContent = element.value || '.'; // Define o conteúdo do elemento temporário
+            tmp.style.visibility = 'hidden'; // Torna o elemento temporário invisível
+            tmp.style.position = 'absolute'; // Define a posição como absoluta para não afetar o layout
+            tmp.style.whiteSpace = 'pre'; // Garante que o texto será quebrado apenas em espaços
+            tmp.style.padding = '18px'; // Define um padding para evitar que as letras sejam cobertas
+            document.body.appendChild(tmp); // Adiciona o elemento temporário ao corpo do documento
+            const isOverflowing = tmp.offsetWidth > element.offsetWidth; // Verifica se há overflow
+            if (isOverflowing) {
+                element.style.width = Math.max(tmp.offsetWidth, 100) + 'px'; // Define a largura do input com base no conteúdo, com um mínimo de 100px
+            }
+            document.body.removeChild(tmp); // Remove o elemento temporário do corpo do documento
+        }
+    }, 10); // Define um atraso de 10 milissegundos antes de redimensionar o input
+}
 
 // ----------------------------------------------------------
 
