@@ -29,10 +29,6 @@ inputData.value = dataAtualFormatada;
 //---------------------------------------------------
 
 
-//const inputData = document.getElementById('data');
-    //const dataAtual = new Date().toLocaleDateString('pt-BR');
-    //inputData.value = dataAtual;
-
     
 
 // ------ INPUTS DE SE HOUVE VENDA OU NÃO -----
@@ -81,15 +77,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
-
 // -----------------------------------------------
 
 
 // ----- PRÉ DEFINIÇÃO DO FORMATO DE NUMERO CELULAR NO INPUT -----
 
-var telefoneInput = document.getElementById('telefone');
+var telefoneInput = document.querySelector('.custom-input-telefone');
 
 
 telefoneInput.addEventListener('input', function() {
@@ -123,6 +116,10 @@ function adicionarRelatorio() {
     novoRelatorio.querySelectorAll('input, textarea').forEach(function(elemento) {
         elemento.value = '';
     });
+
+    // Resetar o valor do campo de seleção "Houve vendas?"
+    var selectHouveVendas = novoRelatorio.querySelector('#houve-vendas');
+    selectHouveVendas.value = 'Escolha uma opção';
 
     // Reiniciar o estado dos campos condicionais
     var selectHouveVendas = novoRelatorio.querySelector('#houve-vendas');
