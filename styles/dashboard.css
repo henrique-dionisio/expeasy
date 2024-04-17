@@ -29,6 +29,7 @@ body {
     padding-bottom: 1rem;
     padding-left: 0.8rem;
     padding-right: 0.8rem;
+    border: 2px solid black;
 }
 
 .title-report {
