@@ -6,7 +6,7 @@ var dataAtual = new Date();
 
 // Subtraia dois dias da data atual
 var doisDiasAntes = new Date(dataAtual);
-doisDiasAntes.setDate(dataAtual.getDate() - 5);
+doisDiasAntes.setDate(dataAtual.getDate() - 2);
 
 // Converta a data para o formato YYYY-MM-DD
 var dataFormatada = doisDiasAntes.toISOString().split('T')[0];
