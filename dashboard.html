@@ -74,7 +74,7 @@
                             </div>
                             <div class="text-area">
                                 <label for="horario-final" class="form-label">Motivo da visita</label>
-                                <textarea id="motivo-visita" class="form-control custom-input-motivo" rows="3" required></textarea>
+                                <textarea id="motivo-visita" class="form-control custom-input-motivo" rows="3" required maxlength="75"></textarea>
                             </div>
                             <div class="produto-ofertado">
                                 <label for="horario-final" class="form-label">Produto ofertado</label>
@@ -106,8 +106,8 @@
                                 </div>
                                 <!-- Campo para "Não" -->
                                 <div id="motivo-nao-venda" style="display: none;">
-                                    <label for="motivo-nao-venda">Motivo (caso não tenha havido vendas):</label>
-                                    <textarea class="form-control custom-input-motivo" rows="3" id="motivo"></textarea>
+                                    <label for="motivo-nao-venda">Motivo (de não haver vendas):</label>
+                                    <textarea class="form-control custom-input-motivo" rows="3" id="motivo" maxlength="75"></textarea>
                                 </div>
                                 <button type="button" class="btn btn-danger btn-deletar-cliente">Deletar Cliente</button>
                                 <hr class="line-division">
@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="text-area">
                                     <label for="descricao" class="form-label descricao">Descrição complementar</label>
-                                    <textarea id="despesaDescricao" class="form-control custom-input-descricao" rows="3"></textarea>
+                                    <textarea id="despesaDescricao" class="form-control custom-input-descricao" rows="3" maxlength="75"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-danger" onclick="removerDespesa(this)">Remover Despesa</button>

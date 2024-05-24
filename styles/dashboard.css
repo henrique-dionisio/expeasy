@@ -226,6 +226,10 @@ label {
     box-shadow: 0 0 0 0.2rem rgba(133, 213, 35, 0.5) !important;
 }
 
+.custom-input-motivo {
+    resize: none;
+}
+
 .custom-input-motivo:hover {
     border-color: #85D523;
 }
@@ -433,6 +437,7 @@ label {
     width: 20rem;
     height: 5rem;
     margin: auto;
+    resize: none;
 }
 
 .descricao {
