@@ -74,7 +74,7 @@
                             </div>
                             <div class="text-area">
                                 <label for="horario-final" class="form-label">Motivo da visita</label>
-                                <textarea class="form-control custom-input-motivo" rows="3" required></textarea>
+                                <textarea id="motivo-visita" class="form-control custom-input-motivo" rows="3" required></textarea>
                             </div>
                             <div class="produto-ofertado">
                                 <label for="horario-final" class="form-label">Produto ofertado</label>
@@ -85,8 +85,8 @@
                                     <label for="houve-vendas">Houve vendas?</label>
                                     <select class="form-control custom-input-vendas" id="houve-vendas" required>
                                         <option selected>Escolha uma opção</option>
-                                        <option value="nao">Não</option>
-                                        <option value="sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                        <option value="Sim">Sim</option>
                                     </select>
                                 </div>
                                 <!-- Campos para "Sim" -->
@@ -107,7 +107,7 @@
                                 <!-- Campo para "Não" -->
                                 <div id="motivo-nao-venda" style="display: none;">
                                     <label for="motivo-nao-venda">Motivo (caso não tenha havido vendas):</label>
-                                    <textarea class="form-control custom-input-motivo" rows="3"></textarea>
+                                    <textarea class="form-control custom-input-motivo" rows="3" id="motivo"></textarea>
                                 </div>
                                 <button type="button" class="btn btn-danger btn-deletar-cliente">Deletar Cliente</button>
                                 <hr class="line-division">
@@ -142,11 +142,11 @@
                                     <label for="categoria-despesa" class="form-label">Categoria da despesa</label>
                                     <select class="form-control custom-input-categoria-despesa" id="categoria-despesa">
                                         <option selected>Escolha uma opção</option>
-                                        <option value="nao">Alimentação</option>
-                                        <option value="sim">Combustível</option>
-                                        <option value="nao">Hospedagem</option>
-                                        <option value="sim">Manutenção do veículo</option>
-                                        <option value="sim">Pedágio</option>
+                                        <option value="Alimentação">Alimentação</option>
+                                        <option value="Combustível">Combustível</option>
+                                        <option value="Hospedagem">Hospedagem</option>
+                                        <option value="Manutenção do veículo">Manutenção do veículo</option>
+                                        <option value="Pedágio">Pedágio</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="text-area">
                                     <label for="descricao" class="form-label descricao">Descrição complementar</label>
-                                    <textarea class="form-control custom-input-descricao" rows="3"></textarea>
+                                    <textarea id="despesaDescricao" class="form-control custom-input-descricao" rows="3"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-danger" onclick="removerDespesa(this)">Remover Despesa</button>

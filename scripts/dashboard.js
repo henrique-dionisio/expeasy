@@ -38,7 +38,7 @@ inputData.value = dataAtualFormatada;
     const motivoNaoVenda = document.getElementById('motivo-nao-venda');
 
     houveVendasSelect.addEventListener('change', function () {
-        if (houveVendasSelect.value === 'sim') {
+        if (houveVendasSelect.value === 'Sim') {
             camposVendas.style.display = 'block';
             motivoNaoVenda.style.display = 'none';
         } else {
@@ -128,10 +128,10 @@ function adicionarRelatorio() {
 
     // Definir o evento de mudança para o novo select
     selectHouveVendas.addEventListener('change', function() {
-        if (selectHouveVendas.value === 'nao') {
+        if (selectHouveVendas.value === 'Não') {
             camposVendas.style.display = 'none';
             motivoNaoVenda.style.display = 'block';
-        } else if (selectHouveVendas.value === 'sim') {
+        } else if (selectHouveVendas.value === 'Sim') {
             camposVendas.style.display = 'block';
             motivoNaoVenda.style.display = 'none';
         }
@@ -513,32 +513,195 @@ document.addEventListener('DOMContentLoaded', function() {
 // ----- GERAR RELATORIO EM PDF -----
 
 function gerarPdf() {
-    // Verificar se todos os campos obrigatórios estão preenchidos
-    const camposObrigatorios = document.querySelectorAll('[required]');
-    let todosPreenchidos = true;
+    var nomeVendedor = document.getElementById('nome').value;
+    var data = document.getElementById('data').value;
+    var placaVeiculo = document.getElementById('placa').value;
+    var kmInicial = document.getElementById('km-inicio').value;
+    var fotoKmInicial = document.getElementById('foto-inicio').files[0];
+    var kmFinal = document.getElementById('km-final').value;
+    var fotoKmFinal = document.getElementById('foto-final').files[0];
+    var resumoVisitas = document.getElementById('resumo-visitas').value;
+    var resumoVendas = document.getElementById('resumo-vendas').value;
+    var resumoValorVendas = document.getElementById('resumo-valor-vendas').value;
+    var resumoQuilometragemTotal = document.getElementById('quilometragem-total').value;
+    var resumoValorDespesasTotal = document.getElementById('resumo-valor-despesas').value;
 
-    camposObrigatorios.forEach(campo => {
-        if (!campo.value.trim()) {
-            todosPreenchidos = false;
-            // Você pode adicionar um estilo para destacar campos obrigatórios não preenchidos aqui, se desejar
-            campo.style.border = '1px solid red';
+    var doc = new jsPDF();
+    let yOffset = 10;
+    const topMargin = 10;
+
+    const imageWidth = 40;  // Largura da imagem
+    const imageHeight = 60; // Altura da imagem
+
+    function checkPageBreak(extraHeight = 0) {
+        const pageHeight = doc.internal.pageSize.height;
+        if (yOffset + extraHeight >= pageHeight - 20) { // Ajuste conforme necessário
+            doc.addPage();
+            yOffset = topMargin; // Reinicia a posição vertical no topo da nova página
         }
+    }
+
+    // Função para adicionar imagem
+    function addImageToPdf(doc, imageFile, x, y, width, height, callback) {
+        if (imageFile) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                let imgData = event.target.result;
+                checkPageBreak(height + 10); // Verifica se há espaço suficiente antes de adicionar a imagem
+                doc.addImage(imgData, 'JPEG', x, yOffset, width, height);
+                yOffset += height + 10;
+                callback();
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            callback();
+        }
+    }
+
+    // Adicionar dados do vendedor
+    doc.fromHTML('<h4 style="font-size: 22px">DADOS DO VENDEDOR</h4>', 10);
+    yOffset += 10;
+    doc.fromHTML(`<p style="font-size: 18px"><b>Nome do vendedor:</b> ${nomeVendedor}</p>`, 10, yOffset);
+    yOffset += 8;
+    doc.fromHTML(`<p style="font-size: 18px"><b>Placa do veículo:</b> ${placaVeiculo}</p>`, 10, yOffset);
+    yOffset += 8;
+    doc.fromHTML(`<p style="font-size: 18px"><b>Data:</b> ${data}</p>`, 10, yOffset);
+    yOffset += 8;
+    doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+    yOffset += 8;
+
+    // Adicionar dados dos clientes
+    doc.fromHTML('<h4 style="font-size: 22px">RELATÓRIO DE VISITAS</h4>', 10, yOffset);
+    yOffset += 15;
+    let clientes = document.querySelectorAll('#clientes .relatorio');
+    clientes.forEach((cliente, index) => {
+        let nomeCliente = cliente.querySelector('input[id="nome-cliente"]').value;
+        let telefoneCliente = cliente.querySelector('input[id="telefone"]').value;
+        let cidadeCliente = cliente.querySelector('input[id="cidade"]').value;
+        let enderecoCliente = cliente.querySelector('input[id="endereco"]').value;
+        let horarioInicio = cliente.querySelector('input[id="horario-inicio"]').value;
+        let horarioFinal = cliente.querySelector('input[id="horario-final"]').value;
+        let motivoVisita = cliente.querySelector('textarea[id="motivo-visita"]').value;
+        let produtoOfertado = cliente.querySelector('input[id="produto"]').value;
+        let houveVendas = cliente.querySelector('select[id="houve-vendas"]').value;
+        let produtoVendido = cliente.querySelector('input[id="produto-vendido"]').value;
+        let numeroPedido = cliente.querySelector('input[id="quantidade-vendida"]').value;
+        let valorVenda = cliente.querySelector('input[id="valor"]').value;
+        let motivoNaoVenda = cliente.querySelector('textarea[id="motivo"]').value;
+
+        doc.fromHTML(`<p style="font-size: 18px"><b>Cliente ${index + 1}:</b> ${nomeCliente}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Telefone:</b> ${telefoneCliente}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Cidade:</b> ${cidadeCliente}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Endereço:</b> ${enderecoCliente}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Horário de visitas:</b> ${horarioInicio} até ${horarioFinal}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Motivo da visita:</b> ${motivoVisita}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Produto ofertado:</b> ${produtoOfertado}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Houve vendas?:</b> ${houveVendas}</p>`, 10, yOffset);
+        yOffset += 8;
+
+        if (houveVendas == 'Sim') {
+            doc.fromHTML(`<p style="font-size: 18px"><b>Produto vendido:</b> ${produtoVendido}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Nº do Pedido:</b> ${numeroPedido}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Valor Total:</b> ${valorVenda}</p>`, 10, yOffset);
+            yOffset += 8;
+        } else if (houveVendas == 'Não') {
+            doc.fromHTML(`<p style="font-size: 18px"><b>Motivo de não ter havido vendas:</b> ${motivoNaoVenda}</p>`, 10, yOffset);
+            yOffset += 8;
+        }
+
+        yOffset += 8;
+        checkPageBreak();
     });
 
-    if (todosPreenchidos) {
-        // Todos os campos obrigatórios foram preenchidos, chama a função para gerar o PDF
-        // Chama a função para gerar o PDF
-        // ...
+    doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+    yOffset += 8;
 
-        // Após gerar o PDF, abre a caixa de diálogo de impressão
-        window.print();
-    } else {
-        // Exibir mensagem de erro ou qualquer ação que desejar
-        alert('Por favor, preencha todos os campos obrigatórios.');
+    // Adicionar uma nova página para o relatório de despesas
+    doc.addPage();
+    yOffset = topMargin;
+
+    doc.fromHTML('<h4 style="font-size: 22px">RELATÓRIO DE DESPESAS</h4>', 10, yOffset);
+    yOffset += 15;
+    let despesas = document.querySelectorAll('#despesas form');
+    let despesasCount = 0;  // Contador de despesas por página
+    function processDespesa(index) {
+        if (index >= despesas.length) {
+            // Adicionar uma nova página para o resumo
+            doc.addPage();
+            yOffset = topMargin;
+
+            // Adicionar resumo (outros campos fixos)
+            doc.fromHTML('<h4 style="font-size: 22px">RESUMO</h4>', 10, yOffset);
+            yOffset += 15;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Visitas realizadas:</b> ${resumoVisitas}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Vendas realizadas:</b> ${resumoVendas}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Valor em vendas:</b> ${resumoValorVendas}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Valor em despesas:</b> ${resumoValorDespesasTotal}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Quilometragem percorrida:</b> ${resumoQuilometragemTotal}</p>`, 10, yOffset);
+            yOffset += 8;
+            doc.fromHTML(`<p style="font-size: 18px"><b>Quilometragem inicial:</b> ${kmInicial} km</p>`, 10, yOffset);
+            yOffset += 15;
+
+            addImageToPdf(doc, fotoKmInicial, 10, yOffset, imageWidth, imageHeight, function() {
+                yOffset += 8;
+                doc.fromHTML(`<p style="font-size: 18px"><b>Quilometragem final:</b> ${kmFinal} km</p>`, 10, yOffset);
+                yOffset += 15;
+
+                addImageToPdf(doc, fotoKmFinal, 10, yOffset, imageWidth, imageHeight, function() {
+                    yOffset += 8;
+                    doc.save('relatorio.pdf');
+                });
+            });
+            return;
+        }
+
+        if (despesasCount >= 2) {
+            doc.addPage();
+            yOffset = topMargin;
+            despesasCount = 0;
+        }
+
+        let despesa = despesas[index];
+        let categoriaDespesa = despesa.querySelector('select[id="categoria-despesa"]').value;
+        let valorDespesa = despesa.querySelector('input[id="valor-despesa"]').value;
+        let descricaoDespesa = despesa.querySelector('textarea[id="despesaDescricao"]').value;
+        let fotoDespesa = despesa.querySelector('input[id="foto-despesa"]').files[0];
+
+        doc.fromHTML(`<p style="font-size: 18px"><b>Despesa ${index + 1}:</b> ${categoriaDespesa}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Valor:</b> ${valorDespesa}</p>`, 10, yOffset);
+        yOffset += 8;
+        doc.fromHTML(`<p style="font-size: 18px"><b>Descrição complementar:</b> ${descricaoDespesa}</p>`, 10, yOffset);
+        yOffset += 15;
+
+        addImageToPdf(doc, fotoDespesa, 10, yOffset, imageWidth, imageHeight, function() {
+            yOffset += 5;
+            doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+            yOffset += 5;
+            despesasCount++;
+            processDespesa(index + 1);
+        });
     }
+
+    processDespesa(0);
 }
 
 // ----------------------------------------------------------
+
+
 
 // ----- CAIXA DE TEXTO E INPUT DE TEXTO SE ADEQUA AO CONTEÚDO -----
 
@@ -581,6 +744,18 @@ function autoResize(event) {
 }
 
 // ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
