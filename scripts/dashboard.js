@@ -558,16 +558,27 @@ function gerarPdf() {
         }
     }
 
+    // Função para formatar data
+    function formatDate(dateString) {
+        let [year, month, day] = dateString.split('-');
+        return `${day}-${month}-${year}`;
+    }
+
+    doc.fromHTML('<h4 style="font-size: 22px">RELATÓRIO DE VISITAS E DESPESAS</h4>', 50, yOffset);
+    yOffset += 15;
+    doc.fromHTML(`____________________________________________________________________________________________`, 5, yOffset);
+    yOffset += 8;
+
     // Adicionar dados do vendedor
-    doc.fromHTML('<h4 style="font-size: 22px">DADOS DO VENDEDOR</h4>', 10);
-    yOffset += 10;
+    doc.fromHTML('<h4 style="font-size: 22px">DADOS DO VENDEDOR</h4>', 10, yOffset);
+    yOffset += 15;
     doc.fromHTML(`<p style="font-size: 18px"><b>Nome do vendedor:</b> ${nomeVendedor}</p>`, 10, yOffset);
     yOffset += 8;
     doc.fromHTML(`<p style="font-size: 18px"><b>Placa do veículo:</b> ${placaVeiculo}</p>`, 10, yOffset);
     yOffset += 8;
-    doc.fromHTML(`<p style="font-size: 18px"><b>Data:</b> ${data}</p>`, 10, yOffset);
+    doc.fromHTML(`<p style="font-size: 18px"><b>Data:</b> ${formatDate(data)}</p>`, 10, yOffset);
     yOffset += 8;
-    doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+    doc.fromHTML(`____________________________________________________________________________________________`, 5, yOffset);
     yOffset += 8;
 
     // Adicionar dados dos clientes
@@ -614,7 +625,7 @@ function gerarPdf() {
             doc.fromHTML(`<p style="font-size: 18px"><b>Valor Total:</b> ${valorVenda}</p>`, 10, yOffset);
             yOffset += 8;
         } else if (houveVendas == 'Não') {
-            doc.fromHTML(`<p style="font-size: 18px"><b>Motivo de não ter havido vendas:</b> ${motivoNaoVenda}</p>`, 10, yOffset);
+            doc.fromHTML(`<p style="font-size: 18px"><b>Motivo (de não haver vendas):</b> ${motivoNaoVenda}</p>`, 10, yOffset);
             yOffset += 8;
         }
 
@@ -622,7 +633,7 @@ function gerarPdf() {
         checkPageBreak();
     });
 
-    doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+    doc.fromHTML(`____________________________________________________________________________________________`, 5, yOffset);
     yOffset += 8;
 
     // Adicionar uma nova página para o relatório de despesas
@@ -689,7 +700,7 @@ function gerarPdf() {
 
         addImageToPdf(doc, fotoDespesa, 10, yOffset, imageWidth, imageHeight, function() {
             yOffset += 5;
-            doc.fromHTML(`___________________________________________________________________`, 5, yOffset);
+            doc.fromHTML(`____________________________________________________________________________________________`, 5, yOffset);
             yOffset += 5;
             despesasCount++;
             processDespesa(index + 1);
